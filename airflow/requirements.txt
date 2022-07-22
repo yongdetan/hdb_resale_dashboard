@@ -1,0 +1,5 @@
+pyspark
+gcsfs
+apache-airflow-providers-google
+requests
+pandas
