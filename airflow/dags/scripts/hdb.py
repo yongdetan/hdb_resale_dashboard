@@ -43,11 +43,8 @@ def extract_data(latest_date_api, latest_date_dl, folder, bucket, ti):
     else:
         #Setting up the filters dict so that the program will specifically extract new data
         latest_date_api = datetime.strptime(latest_date_api, '%Y-%m')
-        latest_date_dl = datetime.fromisoformat(latest_date_dl)
+        latest_date_dl = datetime.strptime(latest_date_dl, '%Y-%m')
         no_of_months = math.floor((latest_date_api-latest_date_dl).days / 30) 
-
-        if (no_of_months == 1): #if no of months = 1 it means that the data in the data warehouse is up to date.
-            return False
 
         new_dates = []
         for months in range(no_of_months):
@@ -90,12 +87,26 @@ def transform_data(ti, bucket):
     #Changing datatype
     df_pyspark = df_pyspark.withColumn('month', df_pyspark['month'].cast('date'))
 
-    #Creating maturity column.
-    mature_estates = ['ANG MO KIO', 'BEDOK', 'BISHAN', 'BUKIT MERAH', 'BUKIT TIMAH', 'CENTRAL AREA', 'CLEMENTI','GEYLANG', 'KALLANG/WHAMPOA', 'MARINE PARADE', 'PASIR RIS', 'QUEENSTOWN', 'SERANGOON', 'TAMPINES', 'TOA PAYOH']
-    non_mature_estates = ['BUKIT BATOK', 'BUKIT PANJANG', 'CHOA CHU KANG', 'HOUGANG', 'JURONG EAST', 'JURONG WEST', 'PUNGGOL', 'SEMBAWANG', 'SENGKANG', 'TENGAH', 'WOODLANDS', 'YISHUN']
-    conditions = when(col('town').isin(mature_estates), 'Mature').when(col('town').isin(non_mature_estates), 'Non-Mature').otherwise('Uncategorized')
-    df_pyspark = df_pyspark.withColumn('maturity', conditions)
+    #Creating maturity column
+    MATURE_ESTATES = ['ANG MO KIO', 'BEDOK', 'BISHAN', 'BUKIT MERAH', 'BUKIT TIMAH', 'CENTRAL AREA', 'CLEMENTI','GEYLANG', 'KALLANG/WHAMPOA', 'MARINE PARADE', 'PASIR RIS', 'QUEENSTOWN', 'SERANGOON', 'TAMPINES', 'TOA PAYOH']
+    NON_MATURE_ESTATES = ['BUKIT BATOK', 'BUKIT PANJANG', 'CHOA CHU KANG', 'HOUGANG', 'JURONG EAST', 'JURONG WEST', 'PUNGGOL', 'SEMBAWANG', 'SENGKANG', 'TENGAH', 'WOODLANDS', 'YISHUN']
+    maturity_conditions = when(col('town').isin(MATURE_ESTATES), 'Mature') \
+        .when(col('town').isin(NON_MATURE_ESTATES), 'Non-Mature') \
+        .otherwise('Uncategorized')
+    df_pyspark = df_pyspark.withColumn('maturity', maturity_conditions)
 
+    #Creating region column ref https://www.hdb.gov.sg/about-us/history/hdb-towns-your-home
+    NORTH = ['SEMBAWANG', 'WOODLANDS', 'YISHUN']
+    NORTH_EAST = ['ANG MO KIO', 'HOUGANG', 'PUNGGOL', 'SENGKANG', 'SERANGOON']
+    EAST = ['BEDOK', 'PASIR RIS', 'TAMPINES']
+    WEST = ['BUKIT BATOK', 'BUKIT PANJANG', 'CHOA CHU KANG', 'CLEMENTI', 'JURONG EAST', 'JURONG WEST', 'TENGAH']
+    CENTRAL = ['BISHAN', 'BUKIT MERAH', 'BUKIT TIMAH', ' CENTRAL AREA', 'GEYLANG', 'KALLANG/WHAMPOA', 'MARINE PARADE', 'QUEENSTOWN', 'TOA PAYOH']
+    region_conditions =  when(col('town').isin(NORTH), 'North') \
+        .when(col('town').isin(NORTH_EAST), 'North-East').when(col('town').isin(EAST), 'East') \
+        .when(col('town').isin(WEST), 'West').when(col('town').isin(CENTRAL), 'Central') \
+        .otherwise('Uncategorized')
+    df_pyspark = df_pyspark.withColumn('region', region_conditions)
+    
     #Convert datatypes in the pyspark dataframe to the equivalent in GCP 
     df_pyspark = gcp.convert_datatype(df_pyspark)
 

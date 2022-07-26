@@ -12,7 +12,7 @@ DATA_TITLE = 'hdb'
 
 def update_checker(latest_date_api, latest_date_dl):
     try: 
-        if (datetime.fromisoformat(latest_date_api) - datetime.fromisoformat(latest_date_dl) >= timedelta(days=1)):
+        if (datetime.strptime(latest_date_api, '%Y-%m').month - datetime.strptime(latest_date_dl, '%Y-%m').month > 1):
             return True
         else:
             return False

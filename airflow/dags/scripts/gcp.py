@@ -18,7 +18,7 @@ def retrieve_latest_data_gcs(bucket, folder, file_format):
 
         #sort the blob list based on their updated date and in descending order
         sorted_blob_list = sorted(blobs, key=lambda x: x.updated, reverse=True) 
-
+        
         #retrieve the name of the latest file from the sorted list
         latest_file = str(sorted_blob_list[0].name)
 
@@ -30,5 +30,3 @@ def retrieve_latest_data_gcs(bucket, folder, file_format):
         return dates[1]
     except:
         return ''
-
-
