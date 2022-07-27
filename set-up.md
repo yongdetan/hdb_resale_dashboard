@@ -60,5 +60,16 @@ docker-compose build .
 docker-compose up -d
 ```
 
+## Accessing Airflow Web UI 
+1. Start up your browser and go to this link
+```
+localhost:8080
+```
+2. The login credentials are as follow:
+```
+Username: airflow
+Password: airflow
+```
+
 
 
