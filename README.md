@@ -1,7 +1,6 @@
 # HDB Resale Dashboard
 
-![dashboard](https://user-images.githubusercontent.com/61530179/180374038-08226b0a-1b57-443b-83ab-6ace26c6b168.png)
-
+![HDB_Resale_Dashboard-1](https://user-images.githubusercontent.com/61530179/181432539-bb092445-556d-4928-ab2e-4bf545e4b655.png)
 
 Link to dashboard
 - https://datastudio.google.com/reporting/a57df325-96e8-4ae0-8eac-76c5f23ece87/page/NPQxC
