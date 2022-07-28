@@ -100,7 +100,7 @@ def transform_data(ti, bucket):
     NORTH_EAST = ['ANG MO KIO', 'HOUGANG', 'PUNGGOL', 'SENGKANG', 'SERANGOON']
     EAST = ['BEDOK', 'PASIR RIS', 'TAMPINES']
     WEST = ['BUKIT BATOK', 'BUKIT PANJANG', 'CHOA CHU KANG', 'CLEMENTI', 'JURONG EAST', 'JURONG WEST', 'TENGAH']
-    CENTRAL = ['BISHAN', 'BUKIT MERAH', 'BUKIT TIMAH', ' CENTRAL AREA', 'GEYLANG', 'KALLANG/WHAMPOA', 'MARINE PARADE', 'QUEENSTOWN', 'TOA PAYOH']
+    CENTRAL = ['BISHAN', 'BUKIT MERAH', 'BUKIT TIMAH', 'CENTRAL AREA', 'GEYLANG', 'KALLANG/WHAMPOA', 'MARINE PARADE', 'QUEENSTOWN', 'TOA PAYOH']
     region_conditions =  when(col('town').isin(NORTH), 'North') \
         .when(col('town').isin(NORTH_EAST), 'North-East').when(col('town').isin(EAST), 'East') \
         .when(col('town').isin(WEST), 'West').when(col('town').isin(CENTRAL), 'Central') \
