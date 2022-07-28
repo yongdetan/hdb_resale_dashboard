@@ -56,3 +56,4 @@ HDB
 | remaining_lease | string | Flat remaining lease |
 | resale_price | float | Flat resale price |
 | maturity | string | Flat maturity |
+| region | string | Flat region |
