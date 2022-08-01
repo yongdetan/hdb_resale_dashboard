@@ -30,7 +30,8 @@ dag = DAG(
     'hdb_etl_gbq_dag',
     default_args=default_args,
     description='Resale HDB ETL Pipeline',
-    schedule_interval='@monthly'
+    schedule_interval='0 12 2 * *', # run dag on 2nd of every month at 12pm 
+    catchup=False,
 )
 
 check_for_new_data = ShortCircuitOperator(dag=dag,

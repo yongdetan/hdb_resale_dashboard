@@ -113,3 +113,4 @@ def transform_data(ti, bucket):
     df_pyspark.toPandas().to_parquet(transformed_data_uri) 
     shortened_transformed_data_uri = transformed_data_uri.replace(f'gs://{bucket}/','')
     ti.xcom_push(key='shortened_transformed_data_uri', value=shortened_transformed_data_uri)
+

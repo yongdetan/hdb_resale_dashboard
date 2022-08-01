@@ -30,7 +30,8 @@ dag = DAG(
     'sora_etl_gbq_dag',
     default_args=default_args,
     description='SORA ETL Pipeline',
-    schedule_interval='@daily'
+    schedule_interval='@daily',
+    catchup=False,
 )
 
 check_for_new_data = ShortCircuitOperator(dag=dag,
