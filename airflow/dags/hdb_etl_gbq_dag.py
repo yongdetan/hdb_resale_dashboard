@@ -12,7 +12,7 @@ DATA_TITLE = 'hdb'
 
 def update_checker(latest_date_api, latest_date_dl):
     try: 
-        if (datetime.strptime(latest_date_api, '%Y-%m').month - datetime.strptime(latest_date_dl, '%Y-%m').month > 1):
+        if (datetime.strptime(latest_date_api, '%Y-%m').month - datetime.strptime(latest_date_dl, '%Y-%m').month >= 1):
             return True
         else:
             return False
@@ -64,7 +64,9 @@ gcs_to_bq = GCSToBigQueryOperator(
     destination_project_dataset_table=f'{BIGQUERY_DATASET}.{DATA_TITLE}',
     source_format='PARQUET',
     create_disposition='CREATE_IF_NEEDED',
-    write_disposition='WRITE_APPEND',
+    write_disposition='WRITE_APPEND',   
+    time_partitioning = {'type':'MONTH', 'field':'month'}, #partition table with the month column with monthly 
+    cluster_fields = ['town', 'flat_model', 'flat_type'], #clustering columns with high cardinality
     autodetect=True, 
     )
 

@@ -1,5 +1,4 @@
 import io
-import math
 import requests
 import pandas as pd
 import json
@@ -44,16 +43,13 @@ def extract_data(latest_date_api, latest_date_dl, folder, bucket, ti):
         #Setting up the filters dict so that the program will specifically extract new data
         latest_date_api = datetime.strptime(latest_date_api, '%Y-%m')
         latest_date_dl = datetime.strptime(latest_date_dl, '%Y-%m')
-        no_of_months = math.floor((latest_date_api-latest_date_dl).days / 30) 
+        no_of_months = latest_date_api.month - latest_date_dl.month
 
         new_dates = []
         for months in range(no_of_months):
-            new_date = datetime.strftime(latest_date_dl + relativedelta(months=months),'%Y-%m')
-            currentMonth, currentYear = datetime.now().strftime('%m'), datetime.now().strftime('%Y')
-            current_date_str = f'{currentYear}-{currentMonth}'
-            if (new_date != current_date_str):
-                new_dates.append(new_date)
-
+            new_date = datetime.strftime(latest_date_dl + relativedelta(months=months+1), '%Y-%m')
+            new_dates.append(new_date)
+                
         filters = {'month':new_dates} #dict for filtering the api data. Even though it says 'month', it actually consists of year and month
         api_endpoint = 'https://data.gov.sg/api/action/datastore_search'
         api_parameters = {
