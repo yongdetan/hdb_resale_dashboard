@@ -9,12 +9,12 @@ Link to dashboard
 
 This dashboard allows users to visualize the prices of resale flats in Singapore and analyse the Singapore Overnight Rate Average (SORA) rate of which will be the new benchmark interest rate for home loans by 2024.
 
-All data presented in this dashboard is sourced from Google BigQuery. The data that is loaded into BigQuery is retrieved through a data pipeline that extracted data from two different API sources, MAS's Domestic Interest 
-Rate API and data.gov.sg's Resale Flat Prices API. Data that were extracted from the APIs were loaded into to Google Cloud Storage which serves as a data lake to store all raw and transformed data. Once the pipeline has finished
+All data presented in this dashboard is sourced from Google BigQuery. The data that is loaded into BigQuery is retrieved through a data pipeline that extracted data from two different API sources, [MAS's Domestic Interest 
+Rate API](https://secure.mas.gov.sg/api/APIDescPage.aspx?resource_id=9a0bf149-308c-4bd2-832d-76c8e6cb47ed) and [data.gov.sg's Resale Flat Prices API](https://data.gov.sg/dataset/resale-flat-prices). Data that were extracted from the APIs were loaded into to Google Cloud Storage which serves as a data lake to store all raw and transformed data. Once the pipeline has finished
 processing the raw data with PySpark, the transformed data in Google Cloud Storage is then loaded into the data into BigQuery.
 
 To automate and ensure that the data is always updated Apache Airflow is used to orchestrate all of the tasks within the pipeline. Docker is also used containerized the entire pipeline to ensure reproducibility. Lastly, since this 
-dashboard uses cloud services such as Google Cloud Storage and Google BigQuery to function as a Data Lake and a Data Warehouse respectively, Terraform is used to build and manage these two sevices.
+dashboard uses cloud services such as Google Cloud Storage and Google BigQuery to function as a Data Lake and a Data Warehouse respectively, Terraform is used to build and manage these two services.
 
 # Motivation
 
