@@ -20,13 +20,12 @@ dashboard uses cloud services such as Google Cloud Storage and Google BigQuery t
 
 There are two main motivations as to why I started out this project
 
-- The first reason is because I wanted to learn more about data engineering and the technologies associated with it. This is also the biggest reason why I used tools such as Google Cloud Platform and PySpark to transform and load the data data when I could simply use a local database and pandas.
-- The second reason is because I feel that owning a house is something every one would like to have in the future. As such, building a pipeline to supply data for a dashboard that allow people to analyse the interest rate for home loan and housing prices would be a good problem statement.
+- The first reason is because I wanted to learn more about data engineering and the technologies associated with it. This is also the reason why I decided to integrate the use of technologies like the Google Cloud Platform and PySpark to transform and load the data when I could simply use a local database and pandas since the data is not that big.
+- The second reason is because I feel that owning a house is something almost everyone would like to achieve in the future, including me. As such, building a data pipeline to supply data for a dashboard that allow people to analyse the interest rate for home loan and housing prices would be interesting and useful.
 
 # Architecture
 
 ![Architecture](https://user-images.githubusercontent.com/61530179/180378899-fd990169-caf5-474e-ad30-6630b47ff5c4.png)
-
 
 # Metadata
 
